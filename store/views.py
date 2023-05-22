@@ -15,9 +15,12 @@ def index(request):
 
 
 def product(request, pid):
-    product = Product.objects.select_related()
+    product = Product.objects.get(pk=pid)
     return render(
-        request, 'product.html'
+        request, 'product.html',
+        {
+            'product': product
+        }
     )
 
 
