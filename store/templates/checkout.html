@@ -3,9 +3,7 @@
 
 {% block content %}
 
-<div class="bg-white py-4">
-    <h1 class="text-center text-secondary">{% trans "Payment" %}</h1>
-  </div>
+{% include 'common/page_title.html' with title='Checkout' %}
   <div class="container my-5">
     <div class="row bd-highlight">
       <div class="col-md-12">
@@ -17,15 +15,16 @@
         </h4>
       </div>
       <div class="col-12">
-        <h4 class="my-3">{% trans "Personal information" %}</h4>
+        <h4 class="my-3">{% trans "Your information" %}</h4>
         <div class="card">
           <div class="card-body">
-            <form id="form-user-info">
+            <form id="form-user-info" action="{% url 'checkout.order' %}" method="POST">
+              {% csrf_token %}
               <div class="row">
                 <div class="col-md-6">
                   <div class="mb-3">
                     <label for="firstNameInput" class="form-label"
-                      >{% trans "Name" %}</label
+                      >{% trans "First Name" %}</label
                     >
                     <input
                       type="text"
@@ -63,10 +62,13 @@
                   required
                 />
               </div>
+              <button class="btn btn-primary">
+                {% trans "Save" %}
+              </button>
             </form>
           </div>
         </div>
-        <h4 class="my-3">{% trans "Payment method" %}</h4>
+        <h4 class="my-3">{% trans "Payment Method" %}</h4>
         <div class="row">
           <div class="col-md-6">
             <div id="pm-paypal" class="card" role="button">
@@ -79,7 +81,7 @@
           <div id="pm-stripe" class="col-md-6">
             <div class="card" role="button">
               <div class="card-body text-center">
-                <p>{% trans "Credit card" %}</p>
+                <p>{% trans "Credit Card" %}</p>
                 <i class="lni lni-credit-cards fs-1"></i>
               </div>
             </div>
