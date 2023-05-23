@@ -1,6 +1,8 @@
 from .forms import UserInfoForm
 from store.models import Product, Cart, Order
 from django.shortcuts import redirect
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
 
 def make_order(request):
     if request.method != 'POST':
@@ -22,7 +24,22 @@ def make_order(request):
         for product in products:
             order.orderproduct_set.create(product_id=product.id, price=product.price)
 
+        send_order_email(order, products)
         cart.delete()
         return redirect('store.checkout_complete')
     else:
         return redirect('store.checkout')
+    
+
+def send_order_email(order, products):
+    msg_html = render_to_string('emails/order.html', {
+        'order': order,
+        'products': products
+    })
+    send_mail(
+        subject='New Order',
+        html_message=msg_html,
+        message=msg_html,
+        from_email='sales@onevertical.com',
+        recipient_list=[order.customer['email']]
+    )
