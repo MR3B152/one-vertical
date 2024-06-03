@@ -13,10 +13,16 @@
     >
       <a class="btn btn-outline-light" data-url="{% url 'store.cart_add' product.id %}"
       onclick="cartUpdate(this)"
-        >{% trans "Add to cart" %}</a
+        >
+        <i class="lni lni-cart"></i> 
+        {% trans "Add to cart" %}
+        </a
       >
       <a class="btn btn-outline-light mt-2" href="{% url 'store.product' product.id %}"
-        >{% trans "View" %}</a
+        >
+        <i class="lni lni-eye"></i> 
+        {% trans "View" %}
+        </a
       >
     </div>
     <div class="card-body">
